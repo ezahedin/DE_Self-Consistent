@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -S /bin/bash
+ 
+# Script for running NAMD on Lattice
+# 2010-10-18 KEW
+ 
+cd $PBS_O_WORKDIR
+ 
+echo "Current working directory is `pwd`"
+ 
+echo "Node file: $PBS_NODEFILE"
+echo "------------------"
+cat $PBS_NODEFILE
+echo "------------------"
+NUM_PROCS=`/bin/awk 'END {print NR}' $PBS_NODEFILE`
+echo "Running on $NUM_PROCS processors."
+ 
+
+echo "Starting run at: `date`"
+ 
+mpirun -np $NUM_PROCS ./runfile
+ 
+echo "Finished run at: `date`"
